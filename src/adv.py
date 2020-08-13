@@ -1,7 +1,8 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
-
+# dictionary of rooms
 room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons"),
@@ -23,7 +24,7 @@ earlier adventurers. The only exit is to the south."""),
 
 
 # Link rooms together
-
+# all directions are set here to keep track of the direction player is going
 room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
@@ -33,18 +34,31 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#
 # Main
-#
-
 # Make a new player object that is currently in the 'outside' room.
+# player = Player('Dulfy the Great')
+# player.current_room = outside
+# print(player.name)
+player = Player(room['outside'])
 
 # Write a loop that:
-#
+while True:
 # * Prints the current room name
+    current_room = player.current_room
+    print(player.current_room.name)
 # * Prints the current description (the textwrap module might be useful here).
+    print(player.current_room.description)
 # * Waits for user input and decides what to do.
-#
+    user_input = input("Choose a direction to move...\n ('n', 's', 'e', 'w'):")
+
+    # can do for all directions
+    if user_input == 'n':
+        if current_room.n_to is not None:
+            player.current_room = current_room.n_to
+        else:
+            # handle error
+            pass
+
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
 #
