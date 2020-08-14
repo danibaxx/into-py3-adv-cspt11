@@ -36,9 +36,6 @@ room['treasure'].s_to = room['narrow']
 
 # Main
 # Make a new player object that is currently in the 'outside' room.
-# player = Player('Dulfy the Great')
-# player.current_room = outside
-# print(player.name)
 player = Player(room['outside'])
 
 # Write a loop that:
@@ -47,19 +44,29 @@ while True:
     current_room = player.current_room
     print(player.current_room.name)
 # * Prints the current description (the textwrap module might be useful here).
-    print(player.current_room.description)
+    print(f'{player.current_room.description}')
 # * Waits for user input and decides what to do.
-    user_input = input("Choose a direction to move...\n ('n', 's', 'e', 'w'):")
+    player_input = input("Choose a direction :" + '\n')
 
-    # can do for all directions
-    if user_input == 'n':
+    # If the user enters a cardinal direction, attempt to move to the room there.
+    if player_input == 'n':
         if current_room.n_to is not None:
             player.current_room = current_room.n_to
-        else:
-            # handle error
-            pass
+        # else:
+    elif player_input == 's':
+        if current_room.s_to is not None:
+            player.current_room = current_room.s_to
+    elif player_input == 'e':
+        if current_room.e_to is not None:
+            player.current_room = current_room.e_to
+    elif player_input == 'w':
+        if current_room.w_to is not None:
+            player.current_room = current_room.w_to
 
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+    # If the user enters "q", quit the game.
+    elif player_input == 'q':
+        break
+
+    # Print an error message if the movement isn't allowed.
+    else:
+        print('Incorrect input, try another')
